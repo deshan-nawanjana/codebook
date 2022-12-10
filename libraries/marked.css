@@ -1,0 +1,211 @@
+.document * {
+    font-family: "Inter";
+    color: #FFFB;
+    user-select: none;
+    scroll-behavior: smooth;
+}
+
+/* text selection */
+.document *::selection { background-color: #FFF2; }
+
+/* scrollbar */
+.document *::-webkit-scrollbar { width: 5px; height: 5px; }
+.document *::-webkit-scrollbar-thumb { background-color: #FFF2; }
+
+/* root element */
+.document {
+    display: block;
+    padding: 25px 30px;
+    border-radius: 10px;
+    width: calc(100% - 60px);
+    height: calc(100% - 50px);
+}
+
+/* indent root elements */
+.document > p {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 20px;
+    margin-inline-end: 0px;
+}
+
+/* remove margin from first and last elements */
+.document > :first-child, .document > *:first-child { margin-top: 10px; }
+.document > :last-child, .document > *:last-child { margin-bottom: 10px; }
+
+.document p {
+    font-size: 14px;
+}
+
+.document li {
+    margin: 8px 0px;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.document a {
+    text-decoration: none;
+    color: #58a6ff;
+}
+
+.document a:hover {
+    text-decoration: underline;
+}
+
+.document .inline-code {
+    font-family: Consolas, monospace;
+    background-color: rgba(110,118,129,0.4);
+    padding: 3px 7px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.document .inline-code:hover {
+    background-color: rgba(110,118,129,0.6);
+}
+
+.document .inline-code:active {
+    background-color: rgba(110,118,129,0.3);
+}
+
+.document .inline-code.copied {
+    color: #3fb850;
+    box-shadow: inset 0px 0px 0px 1px #3fb850;
+}
+
+.document .inline-code.copied {
+    color: #3fb850;
+    box-shadow: inset 0px 0px 0px 1px #3fb850;
+}
+
+.document .code-block {
+    background-color: #161b22;
+    border-radius: 10px;
+    padding: 15px 20px;
+    max-height: 450px;
+    overflow: auto;
+    margin: 10px 0px;
+    position: relative;
+}
+
+.document .code-block, .document .code-block * {
+    font-family: Consolas, monospace;
+    font-size: 15px !important;
+    user-select: text;
+}
+
+.document .code-block-tray {
+    width: 80px;
+    height: 0px;
+    position: absolute;
+    top: 0px;
+    left: calc(100% - 80px);
+    opacity: 0;
+    transition: all 0.2s;
+}
+
+.document .code-block:hover > .code-block-tray,
+.document .code-block.active > .code-block-tray {
+    opacity: 1;
+}
+
+.document .code-block-tray > * {
+    width: 27px;
+    height: 27px;
+    border-radius: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+    background-color: #FFF1;
+    box-shadow: inset 0px 0px 0px 1px #FFF1;
+    background-position: center;
+    background-repeat: no-repeat;
+    float: right;
+    background-size: 65% auto;
+    filter: grayscale(100%);
+    opacity: 0.7;
+    transition: all 0.2s;
+}
+
+.document .code-block-tray > *:hover { opacity: 1; }
+.document .code-block-tray > *:active { opacity: 0.5; }
+
+.document .code-block-copy {
+    margin: 10px 10px 10px 0px;
+    background-image: url('data:image/svg+xml,<svg version="1.1" viewBox="0 0 64 64" width="200" height="200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="%233fb850" style="opacity: 1; transform: rotate(0deg) scale(0.7, 0.7);"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M41,20H3c-1.657,0-3,1.343-3,3v38c0,1.657,1.343,3,3,3h38c1.657,0,3-1.343,3-3V23C44,21.343,42.657,20,41,20z M38,58H6V26h9v0h13v0h10V58z M61,0H23c-1.657,0-3,1.343-3,3v14h6V6h9v0h13v0h10v32H47v6h14c1.657,0,3-1.343,3-3V3C64,1.344,62.657,0,61,0z"></path></g></svg>');
+}
+
+.document .code-block-copy.copied {
+    box-shadow: inset 0px 0px 0px 2px #3fb850;
+    filter: grayscale(0%);
+}
+
+.document .code-block-exec {
+    margin: 10px 6px 10px 0px;
+    background-image: url('data:image/svg+xml,<svg version="1.1" viewBox="0 0 64 64" width="200" height="200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="%233fb850" style="opacity: 1; transform: rotate(0deg) scale(1, 1);"><g><path d="M46,32c0-1.099-0.592-2.06-1.475-2.583l0,0L22.561,16.438c-0.008-0.005-0.016-0.009-0.024-0.014l-0.011-0.007l0,0C22.079,16.153,21.557,16,21,16c-1.657,0-3,1.343-3,3v26c0,1.657,1.343,3,3,3c0.557,0,1.079-0.152,1.526-0.417l0,0l0.011-0.007c0.008-0.006,0.016-0.01,0.024-0.014l21.964-12.979l0,0C45.408,34.061,46,33.1,46,32z"></path></g></svg>');
+}
+
+.document .code-block-exec.running {
+    box-shadow: inset 0px 0px 0px 2px #3fb850;
+    filter: grayscale(0%);
+}
+
+.document .code-block-outs {
+    display: none;
+    background-color: #161b2255;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: inset 0px 0px 0px 2px #3fb85077;
+}
+
+.document .code-block-outs.active {
+    box-shadow: inset 0px 0px 0px 2px #3fb850;
+    background-color: #3fb85011;
+}
+
+.document .code-block-logs {
+    font-size: 13px;
+    padding: 15px 15px 10px 15px;
+    font-family: Consolas, monospace;
+    user-select: text;
+    white-space: pre;
+}
+
+.document .code-block-info {
+    font-size: 13px;
+    padding: 0px 15px 15px 15px;
+    font-family: Consolas, monospace;
+    font-size: 12px;
+    font-style: italic;
+    color: #fff7;
+}
+
+.document .code-block-info::before {
+    content: 'Completed in: ';
+    color: #9980ffee;
+}
+
+.document .code-block-info > span {
+    float: right;
+    font-size: 10px;
+    color: #FFF3;
+}
+
+.document .code-block-exit {
+    width: 18px;
+    height: 18px;
+    float: right;
+    z-index: 2;
+    position: relative;
+    margin: 6px 6px 0px 0px;
+    cursor: pointer;
+    background-image: url('data:image/svg+xml,<svg version="1.1" viewBox="0 0 24 24" width="200" height="200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="fill: rgb(255, 255, 255); opacity: 0.68; transform: rotate(0deg) scale(1, 1);"><g><path d="M17.414 6.586c-.78-.781-2.048-.781-2.828 0l-2.586 2.586-2.586-2.586c-.78-.781-2.048-.781-2.828 0-.781.781-.781 2.047 0 2.828l2.585 2.586-2.585 2.586c-.781.781-.781 2.047 0 2.828.39.391.902.586 1.414.586s1.024-.195 1.414-.586l2.586-2.586 2.586 2.586c.39.391.902.586 1.414.586s1.024-.195 1.414-.586c.781-.781.781-2.047 0-2.828l-2.585-2.586 2.585-2.586c.781-.781.781-2.047 0-2.828z"></path></g></svg>');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 18px auto;
+    opacity: 0.6;
+}
+
+.document .code-block-exit:hover { opacity: 1; }

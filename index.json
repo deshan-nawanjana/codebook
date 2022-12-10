@@ -1,0 +1,89 @@
+{
+    "jdk" : {
+        "name" : "JDK",
+        "version" : "19.0.1",
+        "path" : "bin",
+        "languages" : [
+            {
+                "name" : "Java",
+                "code" : ["java"],
+                "file" : "/class ([^ ]*)/",
+                "extn" : "java",
+                "commands" : [
+                    "javac [name].[extn]",
+                    "java [name]"
+                ]
+            }
+        ]
+    },
+    "julia" : {
+        "name" : "Julia",
+        "version" : "1.8.3",
+        "path" : "bin",
+        "languages" : [
+            {
+                "name" : "Julia",
+                "code" : ["julia"],
+                "extn" : "jl",
+                "commands" : [
+                    "julia [name].[extn]"
+                ]
+            }
+        ]
+    },
+    "mingw" : {
+        "name" : "MinGW",
+        "version" : "12.2.0",
+        "path" : "bin",
+        "languages" : [
+            {
+                "name" : "C",
+                "code" : ["c"],
+                "extn" : "c",
+                "commands" : [
+                    "gcc -o [name] [name].[extn]",
+                    "[name].exe"
+                ]
+            },
+            {
+                "name" : "C++",
+                "code" : ["cpp"],
+                "extn" : "cpp",
+                "commands" : [
+                    "g++ -o [name] [name].[extn]",
+                    "[name].exe"
+                ] 
+            }
+        ]
+    },
+    "python" : {
+        "name" : "Python",
+        "version" : "3.11.1",
+        "path" : "",
+        "languages" : [
+            {
+                "name" : "Python",
+                "code" : ["py", "python"],
+                "extn" : "py",
+                "commands" : [
+                    "python [name].[extn]"
+                ] 
+            }
+        ]
+    },
+    "r" : {
+        "name" : "RScript",
+        "version" : "4.2.1",
+        "path" : "bin",
+        "languages" : [
+            {
+                "name" : "R",
+                "code" : ["r"],
+                "extn" : "r",
+                "commands" : [
+                    "Rscript [name].[extn]"
+                ]
+            }
+        ]
+    }
+}

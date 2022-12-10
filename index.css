@@ -1,0 +1,187 @@
+@font-face {
+    font-family: "Inter";
+    font-weight: 300;
+    src: url('./assets/fonts/Inter-Light.ttf');
+}
+
+@font-face {
+    font-family: "Inter";
+    font-weight: 400;
+    src: url('./assets/fonts/Inter-Regular.ttf');
+}
+
+@font-face {
+    font-family: "Inter";
+    font-weight: 500;
+    src: url('./assets/fonts/Inter-Medium.ttf');
+}
+
+@font-face {
+    font-family: "Inter";
+    font-weight: 700;
+    src: url('./assets/fonts/Inter-Bold.ttf');
+}
+
+* { outline: none; }
+
+body {
+    margin: 0px;
+    overflow: hidden;
+    background-color: #0d1117;
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+}
+
+.container > * { position: relative; }
+
+.container *::-webkit-scrollbar { width: 6px; }
+.container *::-webkit-scrollbar-thumb { background-color: #393e46; }
+
+.editor { background-color: #121821; }
+.viewer { background-color: #0d1117; }
+
+@media (orientation: landscape) {
+    .container { display: flex; }
+    .container > .editor { width: 45vw; }
+    .container > .viewer { width: 55vw; }
+}
+
+@media (orientation: portrait) {
+    .container { display: block; }
+    .container > .editor { height: 40vh; }
+    .container > .viewer { height: 60vh; }
+}
+
+.editor > pre, .editor > textarea {
+    width: calc(100% - 40px);
+    height: calc(100% - 40px);
+    background-color: transparent;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFF;
+    position: absolute;
+    margin: 0px;
+    padding: 20px;
+    border: none;
+    left: 0px;
+    top: 0px;
+    white-space: pre-wrap;
+    word-break: break-all;
+    overflow-y: auto;
+}
+
+.editor textarea {
+    color: transparent;
+    caret-color: #FFF;
+    resize: none;
+    cursor: auto;
+}
+
+.viewer .document {
+    scroll-behavior: smooth;
+    transition-duration: 0.2s;
+    transition-property: opacity, filter;
+    overflow-y: auto;
+}
+
+.document.fade {
+    filter: blur(1px);
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.editor textarea::selection { background-color: #FFF2; }
+
+.markdown { color: #abb2b1; }
+
+.markdown .title .punctuation { color: #e06c75; }
+
+.markdown .url { color: #abb2b1; }
+.markdown .url .content { color: #61afef; }
+.markdown .url .url { color: #c678dd; }
+
+.markdown .bold .token { color: #d19a66; }
+.markdown .bold .punctuation { color: #d19a66; }
+
+.markdown .italic .punctuation { color: #c678d2; }
+.markdown .italic .content { color: #c678d2; }
+
+.markdown .code-snippet { color: #98c379; }
+.markdown .bold .code-snippet { color: #98c379; }
+.markdown .italic .code-snippet { color: #98c379; }
+
+.markdown .list.punctuation { color: #e5c07b; }
+
+.options {
+    position: absolute;
+    width: 218px;
+    height: 60px;
+    border-radius: 60px;
+    background-color: #0f6fc0;
+    left: calc(50% - 112.5px);
+    top: calc(100% + 4px);
+    transition-duration: 0.3s;
+    transition-property: top;
+    white-space: nowrap;
+    display: flex;
+    box-shadow: 0px 0px 5px #111;
+}
+
+.editor:hover > .options, .options.busy {
+    opacity: 1;
+    top: calc(100% - 80px);
+}
+
+.option-button {
+    width: 45px;
+    height: 45px;
+    border-radius: 60px;
+    background-color: #FFF3;
+    margin: 7.5px 0px 0px 7.5px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 40px auto;
+    opacity: 0.8;
+}
+
+.option-button:hover {
+    background-color: #FFF5;
+    opacity: 1;
+}
+
+.option-button:active {
+    opacity: 0.7;
+}
+
+.option-button.busy {
+    background-color: #FFF7;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 100 100' preserveAspectRatio='xMidYMid'%3E%3Ccircle cx='50' cy='50' r='30' stroke='%23ffffff' stroke-width='8' stroke-linecap='round' fill='none'%3E%3CanimateTransform attributeName='transform' type='rotate' repeatCount='indefinite' dur='1.25s' values='0 50 50;180 50 50;720 50 50' keyTimes='0;0.5;1'%3E%3C/animateTransform%3E%3Canimate attributeName='stroke-dasharray' repeatCount='indefinite' dur='1.25s' values='18.84955592153876 169.64600329384882;94.2477796076938 94.24777960769377;18.84955592153876 169.64600329384882' keyTimes='0;0.5;1'%3E%3C/animate%3E%3C/circle%3E%3C/svg%3E");
+}
+
+.option-button.done {
+    background-color: #FFF7;
+}
+
+.ob-open {
+    background-image: url('data:image/svg+xml,<svg version="1.1" viewBox="0 0 24 24" width="200" height="200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="fill: rgb(255, 255, 255); opacity: 1; transform: rotate(0deg) scale(0.55, 0.55);"><g><path d="M3 21a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h7.414l2 2H20a1 1 0 0 1 1 1v3H4v9.996L6 11h16.5l-2.31 9.243a1 1 0 0 1-.97.757H3z"></path></g></svg>');
+}
+
+.ob-save {
+    background-image: url('data:image/svg+xml,<svg version="1.1" viewBox="0 0 24 24" width="200" height="200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="fill: rgb(255, 255, 255); opacity: 1; transform: rotate(0deg) scale(0.55, 0.55);"><g><path d="M4 3h13l3.707 3.707a1 1 0 0 1 .293.707V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm8 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM5 5v4h10V5H5z"></path></g></svg>');
+}
+
+.ob-play {
+    background-image: url('data:image/svg+xml,<svg version="1.1" viewBox="0 0 24 24" width="200" height="200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="fill: rgb(255, 255, 255); opacity: 1; transform: rotate(0deg) scale(0.7, 0.7);"><g><path d="M7.752 5.439l10.508 6.13a.5.5 0 0 1 0 .863l-10.508 6.13A.5.5 0 0 1 7 18.128V5.871a.5.5 0 0 1 .752-.432z"></path></g></svg>');
+}
+
+.ob-conf {
+    background-image: url('data:image/svg+xml,<svg version="1.1" viewBox="0 0 24 24" width="200" height="200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="fill: rgb(255, 255, 255); opacity: 1; transform: rotate(0deg) scale(0.55, 0.55);"><g><path d="M9.954 2.21a9.99 9.99 0 0 1 4.091-.002A3.993 3.993 0 0 0 16 5.07a3.993 3.993 0 0 0 3.457.261A9.99 9.99 0 0 1 21.5 8.876 3.993 3.993 0 0 0 20 12c0 1.264.586 2.391 1.502 3.124a10.043 10.043 0 0 1-2.046 3.543 3.993 3.993 0 0 0-3.456.261 3.993 3.993 0 0 0-1.954 2.86 9.99 9.99 0 0 1-4.091.004A3.993 3.993 0 0 0 8 18.927a3.993 3.993 0 0 0-3.457-.26A9.99 9.99 0 0 1 2.5 15.121 3.993 3.993 0 0 0 4 11.999a3.993 3.993 0 0 0-1.502-3.124 10.043 10.043 0 0 1 2.046-3.543A3.993 3.993 0 0 0 8 5.071a3.993 3.993 0 0 0 1.954-2.86zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path></g></svg>');
+}

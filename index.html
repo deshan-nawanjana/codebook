@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./assets/images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="./index.css">
+    <!-- prism.js -->
+    <link rel="stylesheet" href="./libraries/prism.css">
+    <script src="./libraries/prism.js"></script>
+    <!-- marked.js -->
+    <link rel="stylesheet" href="./libraries/marked.css">
+    <script src="./libraries/marked.js"></script>
+    <title>CodeBook</title>
+</head>
+<body>
+    <div class="container">
+        <div class="editor">
+            <pre class="markdown"></pre>
+            <textarea spellcheck="false" autocomplete="off"></textarea>
+            <div class="options">
+                <div class="option-button ob-open"></div>
+                <div class="option-button ob-save"></div>
+                <div class="option-button ob-play"></div>
+                <div class="option-button ob-conf"></div>
+            </div>
+        </div>
+        <div class="viewer">
+            <div class="document"></div>
+        </div>
+    </div>
+    <script src="./index.js"></script>
+</body>
+</html>
