@@ -1,5 +1,8 @@
 <?php
 
+    // backend checker respond
+    if(isset($_GET['check'])) { echo('CODEBOOK'); exit(); }
+
     // get post request data
     $post = json_decode(file_get_contents('php://input'), true);
     // get compilers data

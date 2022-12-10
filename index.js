@@ -316,7 +316,8 @@ const parserMarkdown = (text = '') => {
 // compiler object
 const compiler = {
     languages : [ 'js', 'javascript' ],
-    busy : false
+    busy : false,
+    backend : true
 }
 
 // method to execute code segments
@@ -398,6 +399,16 @@ const executeFrontend = async(text) => {
 
 // method to execute backend segment
 const executeBakcend = async(text, lang) => {
+    // check backend status
+    if(compiler.backend === false) {
+        return {
+            output : 'CodeBook backend compilers are not available.'
+            + ' Read the documentation for local server setup.',
+            time : 0,
+            error : 'NO_BACKEND',
+            compiler : ''
+        }
+    }
     // request compiler build
     const data = await fetch('/codebook/compilers/build.php', {
         // request method
@@ -442,17 +453,48 @@ const frontendbypass = `
     return _cb_lg_arr_
 `
 
-window.addEventListener('load', async() => {
-    // get backend compilers data
-    const comp = await fetch('index.json').then(x => x.json())
-    // for each compiler
-    Object.values(comp).forEach(item => {
-        // for each language in compiler
-        item.languages.forEach(lang => {
-            // include in languages
-            compiler.languages = compiler.languages.concat(lang.code)
-        })
+// method to check backend
+const checkBackend = () => {
+    return new Promise(resolve => {
+        // check for origin
+        if(location.origin === 'file://') {
+            // not hosted
+            resolve(false)
+        } else {
+            try {
+                // request backend
+                fetch('./compilers/build.php?check').then(resp => {
+                    // get text response
+                    resp.text().then(code => {
+                        // check backend status code
+                        resolve(code === 'CODEBOOK')
+                    }).catch(() => resolve(false))
+                }).catch(() => resolve(false))
+            } catch(e) {
+                // request failed
+                resolve(false)
+            }
+        }
     })
+}
+
+// on window load
+window.addEventListener('load', async() => {
+    // get backend status
+    compiler.backend = await checkBackend()
+    // check for origin
+    if(location.origin.includes('http')) {
+        // get backend compilers data
+        const comp = await fetch('index.json').then(x => x.json())
+        // for each compiler
+        Object.values(comp).forEach(item => {
+            // for each language in compiler
+            item.languages.forEach(lang => {
+                // include in languages
+                compiler.languages = compiler.languages.concat(lang.code)
+            })
+        })
+    }
     // check local storage
     const data = localStorage.getItem('codebook_temp')
     // check content
