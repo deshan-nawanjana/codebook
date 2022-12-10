@@ -22,6 +22,20 @@ const createElementNextTo = (name, selector, sibling) => {
     return element
 }
 
+// method to save file
+const saveFile = (name, text) => {
+    // encode text
+    const data = 'data:text/plain;charset=utf-8,' + encodeURIComponent(text)
+    // create element
+    const elem = document.createElement('a')
+    // set file content
+    elem.setAttribute('href', data)
+    // set file name
+    elem.setAttribute('download', name)
+    // click element
+    elem.click()
+}
+
 // current file location
 const path = location.toString()
 
@@ -46,12 +60,14 @@ const viewer = {
 // options object
 const options = {
     div : {
-        // container elements
+        // editor container elements
         main : document.querySelector('.options'),
         open : document.querySelector('.ob-open'),
         save : document.querySelector('.ob-save'),
         play : document.querySelector('.ob-play'),
-        conf : document.querySelector('.ob-conf')
+        conf : document.querySelector('.ob-conf'),
+        // viewer container elements
+        down : document.querySelector('.ob-down')
     }
 }
 
@@ -152,7 +168,7 @@ options.div.open.addEventListener('click', () => {
                 // update viewer content
                 viewer.updateContent()
                 // set file name on local storage
-                localStorage['bodebook_name'] = file.name
+                localStorage['codebook_name'] = file.name
                 // set done flag for open button
                 editor.setDone(options.div.open)
             })
@@ -177,22 +193,45 @@ options.div.open.addEventListener('click', () => {
 options.div.save.addEventListener('click', () => {
     // update viewer
     viewer.updateContent()
-    // get file data
-    const data = encodeURIComponent(editor.txt.value)
     // get file name
     const name = localStorage['codebook_name'] || 'untitled.md'
-    // create element
-    const elem = document.createElement('a')
-    // set file content
-    elem.setAttribute('href', 'data:text/plain;charset=utf-8,' + data)
-    // set file name
-    elem.setAttribute('download', name)
-    // click element
-    elem.click()
+    // save to file
+    saveFile(name, editor.txt.value)
 })
 
 // update content on play button click
 options.div.play.addEventListener('click', viewer.updateContent)
+
+// download content on down button click
+options.div.down.addEventListener('click', async() => {
+    // set busy for down button
+    editor.setBusy(options.div.down)
+    // get prism css
+    const pcss = await fetch('./libraries/prism.css').then(x => x.text())
+    // get marked css
+    const mcss = await fetch('./libraries/marked.css').then(x => x.text())
+    // get events js
+    const evjs = await fetch('./libraries/events.js').then(x => x.text())
+    // create style block
+    const bcss = '<style>' + pcss + '\n' + mcss + '</style>'
+    // create script block
+    const scrp = '<script>' + evjs + '</script>'
+    // get root content
+    const root = '<div class="document">' + viewer.div.innerHTML + '</div>'
+    // create body content
+    const body = '<body bgcolor="#0d1117">' + root + '</body>'
+    // get file name 
+    const name = localStorage['codebook_name'] || 'untitled.md'
+    // download file
+    saveFile(
+        // file name
+        name.replace('.md', '.html'),
+        // content without exec buttons
+        bcss + scrp + body.replace(/\<div class="code-block-exec"><\/div>/g, '')
+    )
+    // remove busy from down button
+    editor.setDone(options.div.down, 300)
+})
 
 // classes for each query selector
 const classes = {
@@ -260,50 +299,6 @@ const parserMarkdown = (text = '') => {
         }
     }
 }
-
-// on window click
-window.addEventListener('click', event => {
-    // get element
-    const elem = event.target
-    // check for inline code element
-    if(elem.classList.contains('inline-code')) {
-        // set clipboard text
-        navigator.clipboard.writeText(elem.innerText).then(() => {
-            // set copied class
-            elem.classList.add('copied')
-            // delay and remove copied class
-            setTimeout(() => elem.classList.remove('copied'), 800)
-        })
-    } else if(elem.classList.contains('code-block-copy')) {
-        // get code segment element
-        const code = elem.parentElement.parentElement
-        // set clipboard text
-        navigator.clipboard.writeText(code.innerText).then(() => {
-            // set active class
-            code.classList.add('active')
-            // set copied class
-            elem.classList.add('copied')
-            // delay and remove classes
-            setTimeout(() => {
-                // remove active class
-                code.classList.remove('active')
-                // remove copied class
-                elem.classList.remove('copied')
-            }, 800)
-        })
-    } else if(elem.classList.contains('code-block-exec')) {
-        // get code segment element
-        const code = elem.parentElement.parentElement
-        // get code text
-        const text = code.innerText
-        // get language
-        const lang = code.getAttribute('lang')
-        executeCodeSegment(text, lang, code)
-    } else if(elem.classList.contains('code-block-exit')) {
-        // hide parent outs element
-        elem.parentElement.style.display = 'none'
-    }
-})
 
 // compiler object
 const compiler = {
@@ -456,6 +451,15 @@ window.addEventListener('load', async() => {
     }
     // set textarea placeholder
     editor.txt.setAttribute('placeholder', "Type something new...")
+    // delay and fade splash
+    setTimeout(() => {
+        // get splash element
+        const splash = document.querySelector('.splash')
+        // fade splash
+        splash.classList.add('fade')
+        // delay and hide splash
+        setTimeout(() => splash.style.display = 'none', 400)
+    }, 400)
 })
 
 // on key down
