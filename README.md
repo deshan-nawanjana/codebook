@@ -46,7 +46,7 @@ You can click on any `highlighted text` to copy the content inside it. Also move
 
 ## 🚀 Run Codes with Compilers
 
-Within the code blocks, you may see a `compile button` to run the script and get the output. This button only appears when CodeBlock has ability to compile using that particular language. Following script is in JavaScript language. So there will be no problem to run this block anywhere. Go ahead and click the run button.
+Within the code blocks, you may see a `compile button` to run the script and get the output. This button only appears when CodeBook has ability to compile using that particular language. Following script is in JavaScript language. So there will be no problem to run this block anywhere. Go ahead and click the run button.
 
 ```js
 // create constant text
