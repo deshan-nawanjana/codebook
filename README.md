@@ -9,6 +9,7 @@
 - Ruby
 - R
 - Julia
+- Pascal
 
 ```js
 // array of words
@@ -123,6 +124,15 @@ sayHello <- function(){
 }
 
 sayHello()
+```
+
+### Pascal
+
+```pascal
+program Hello;
+begin
+	writeln('Hello, world!')
+end.
 ```
 
 ## 🔮 Setup You Local Server for CodeBook

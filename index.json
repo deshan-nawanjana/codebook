@@ -108,7 +108,7 @@
             }
         ]
     },
-    "ruby" :{
+    "ruby" : {
         "name" : "Ruby",
         "version" : "3.1.3",
         "url" : "https://rubyinstaller.org/downloads/",
@@ -124,6 +124,26 @@
                 "commands" : [
                     "ruby [name].[extn]"
                 ]
+            }
+        ]
+    },
+    "pascal" : {
+        "name" : "Pascal",
+        "version" : "3.2.2",
+        "url" : "https://www.freepascal.org/download.html",
+        "path" : "bin\\i386-win32",
+        "languages" : [
+            {
+                "name" : "fpc",
+                "code" : ["pascal"],
+                "keywords" : {
+                    "name" : "app",
+                    "extn" : "pas"
+                },
+                "commands" : [
+                    "fpc [name].[extn]",
+                    "[name].exe"
+                ] 
             }
         ]
     }
