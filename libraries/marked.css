@@ -24,6 +24,21 @@
     height: calc(100% - 50px);
 }
 
+.viewer.full {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100vw;
+    height: 100vh;
+}
+
+.viewer.full .document::-webkit-scrollbar { width: 0px; height: 0px; }
+
+.viewer.full > .document {
+    max-width: 1000px;
+    margin: auto;
+}
+
 body > .document {
     max-width: 900px;
     margin: auto;

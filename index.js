@@ -67,7 +67,8 @@ const options = {
         play : document.querySelector('.ob-play'),
         conf : document.querySelector('.ob-conf'),
         // viewer container elements
-        down : document.querySelector('.ob-down')
+        down : document.querySelector('.ob-down'),
+        view : document.querySelector('.ob-view')
     }
 }
 
@@ -231,6 +232,18 @@ options.div.down.addEventListener('click', async() => {
     )
     // remove busy from down button
     editor.setDone(options.div.down, 300)
+})
+
+// toggle view on view button click
+options.div.view.addEventListener('click', () => {
+    // check button class
+    if(options.div.view.classList.contains('active')) {
+        document.querySelector('.viewer').classList.remove('full')
+        options.div.view.classList.remove('active')
+    } else {
+        document.querySelector('.viewer').classList.add('full')
+        options.div.view.classList.add('active')
+    }
 })
 
 // classes for each query selector
@@ -468,6 +481,26 @@ window.addEventListener('keydown', event => {
     if(event.key === 'F5') {
         // update viewer
         viewer.updateContent()
+        // prevent event
+        event.preventDefault()
+    } else if(event.key === 'o' && event.ctrlKey) {
+        // trigger open button
+        options.div.open.click()
+        // prevent event
+        event.preventDefault()
+    } else if(event.key === 's' && event.ctrlKey) {
+        // trigger save button
+        options.div.save.click()
+        // prevent event
+        event.preventDefault()
+    } else if(event.key === 'e' && event.ctrlKey) {
+        // trigger down button
+        options.div.down.click()
+        // prevent event
+        event.preventDefault()
+    } else if(event.key === 'f' && event.ctrlKey) {
+        // trigger full view button
+        options.div.view.click()
         // prevent event
         event.preventDefault()
     }
