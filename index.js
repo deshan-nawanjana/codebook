@@ -371,13 +371,13 @@ const executeFrontend = async(text) => {
         data.output.push({ type : 'error', data : [e.message, 1] })
     }
     // map output to multiline string
-    data.output = data.output.map(x => {
+    data.output = Array.isArray(data.output) ? data.output.map(x => {
         // map each argument
         return x.data.map(x => {
             // convert stringify objects if need
             return typeof x === 'object' ? JSON.stringify(x) : x
         }).join(' ')
-    }).join('\n')
+    }).join('\n') : data.output
     // mark end time
     const time_b = performance.now()
     // set runtime
