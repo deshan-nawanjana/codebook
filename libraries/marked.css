@@ -81,7 +81,7 @@
     box-shadow: inset 0px 0px 0px 1px #3fb850;
 }
 
-.document .code-block {
+.document .code-block, .document root > pre {
     background-color: #161b22;
     border-radius: 10px;
     padding: 15px 20px;
@@ -89,6 +89,11 @@
     overflow: auto;
     margin: 10px 0px;
     position: relative;
+}
+
+.document root > pre > code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 15px;
 }
 
 .document .code-block, .document .code-block * {

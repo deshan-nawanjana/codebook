@@ -339,6 +339,8 @@ const executeCodeSegment = async(code, lang, elem) => {
     outs.style.display = 'block'
     // add active for output
     outs.classList.add('active')
+    // check error and set color
+    logs.style.color = data.error ? '#F00' : '#FFFB'
     // set output on logs
     logs.innerHTML = data.output
     // set output info
@@ -406,8 +408,13 @@ const executeBakcend = async(text, lang) => {
     const output = data.output.data.replace(/\</g, '&lt;')
     // get runtime
     const time = data.output.time.toFixed(4)
+    // get error,
+    const error = data.output.error
     // return results
-    return { output, time, compiler : data.compiler.name + ' ' + data.compiler.version }
+    return {
+        output, time, error,
+        compiler : data.compiler.name + ' ' + data.compiler.version
+    }
 }
 
 // bypass for frontend executions

@@ -34,6 +34,21 @@
     // execution path
     $exec_path = "cache\\" . $post['uuid'] . "\\";
 
+    // return if no compiler binary
+    if(file_exists($comp_path) === false) {
+        echo json_encode(
+            array(
+                "output" => array(
+                    "data" => "Compiler does not exist at " . $comp_path,
+                    "time" => 0,
+                    "error" => true
+                ),
+                "compiler" => $comp_data
+            )
+        );
+        exit();
+    }
+
     // create execution directory if need
     if(file_exists($exec_path) === false) { mkdir($exec_path); }
 
