@@ -67,6 +67,19 @@
                     "g++ -o [name] [name].[extn]",
                     "[name].exe"
                 ] 
+            },
+            {
+                "name" : "Fortran",
+                "code" : ["fortran"],
+                "keywords" : {
+                    "name" : "app",
+                    "extn" : "f90"
+                },
+                "commands" : [
+                    "gfortran -c [name].[extn]",
+                    "gfortran -o [name] [name].o",
+                    "[name].exe"
+                ] 
             }
         ]
     },

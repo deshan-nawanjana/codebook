@@ -10,6 +10,7 @@
 - R
 - Julia
 - Pascal
+- Fortran
 
 ```js
 // array of words
@@ -131,8 +132,16 @@ sayHello()
 ```pascal
 program Hello;
 begin
-	writeln('Hello, world!')
+    writeln('Hello, World!')
 end.
+```
+
+### Fortran
+
+```fortran
+program hello
+    print *,"Hello World!"
+end program
 ```
 
 ## 🔮 Setup You Local Server for CodeBook
