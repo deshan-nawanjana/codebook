@@ -494,6 +494,15 @@ window.addEventListener('load', async() => {
                 compiler.languages = compiler.languages.concat(lang.code)
             })
         })
+        // get old local storage data
+        const olds = localStorage['codebook_temp']
+        // check local storage
+        if(olds === undefined || olds === '') {
+            // get readme markdown
+            const read = await fetch('README.md').then(x => x.text())
+            // set on local storage
+            localStorage['codebook_temp'] = read
+        }
     }
     // check local storage
     const data = localStorage.getItem('codebook_temp')
@@ -505,7 +514,7 @@ window.addEventListener('load', async() => {
         viewer.updateContent()
     }
     // set textarea placeholder
-    editor.txt.setAttribute('placeholder', "Type something new...")
+    editor.txt.setAttribute('placeholder', "Type something awesome...")
     // delay and fade splash
     setTimeout(() => {
         // get splash element
