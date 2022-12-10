@@ -2,13 +2,16 @@
     "jdk" : {
         "name" : "JDK",
         "version" : "19.0.1",
+        "url" : "https://www.oracle.com/java/technologies/downloads/",
         "path" : "bin",
         "languages" : [
             {
                 "name" : "Java",
                 "code" : ["java"],
-                "file" : "/class ([^ ]*)/",
-                "extn" : "java",
+                "keywords" : {
+                    "name" : "/class ([^ ]*)/",
+                    "extn" : "java"
+                },
                 "commands" : [
                     "javac [name].[extn]",
                     "java [name]"
@@ -19,12 +22,16 @@
     "julia" : {
         "name" : "Julia",
         "version" : "1.8.3",
+        "url" : "https://julialang.org/downloads/",
         "path" : "bin",
         "languages" : [
             {
                 "name" : "Julia",
                 "code" : ["julia"],
-                "extn" : "jl",
+                "keywords" : {
+                    "name" : "app",
+                    "extn" : "jl"
+                },
                 "commands" : [
                     "julia [name].[extn]"
                 ]
@@ -34,12 +41,16 @@
     "mingw" : {
         "name" : "MinGW",
         "version" : "12.2.0",
+        "url" : "https://www.mingw-w64.org/downloads/",
         "path" : "bin",
         "languages" : [
             {
                 "name" : "C",
                 "code" : ["c"],
-                "extn" : "c",
+                "keywords" : {
+                    "name" : "app",
+                    "extn" : "c"
+                },
                 "commands" : [
                     "gcc -o [name] [name].[extn]",
                     "[name].exe"
@@ -48,7 +59,10 @@
             {
                 "name" : "C++",
                 "code" : ["cpp"],
-                "extn" : "cpp",
+                "keywords" : {
+                    "name" : "app",
+                    "extn" : "cpp"
+                },
                 "commands" : [
                     "g++ -o [name] [name].[extn]",
                     "[name].exe"
@@ -59,12 +73,16 @@
     "python" : {
         "name" : "Python",
         "version" : "3.11.1",
+        "url" : "https://www.python.org/downloads/",
         "path" : "",
         "languages" : [
             {
                 "name" : "Python",
                 "code" : ["py", "python"],
-                "extn" : "py",
+                "keywords" : {
+                    "name" : "app",
+                    "extn" : "py"
+                },
                 "commands" : [
                     "python [name].[extn]"
                 ] 
@@ -74,12 +92,16 @@
     "r" : {
         "name" : "RScript",
         "version" : "4.2.1",
+        "url" : "https://cran.r-project.org/bin/windows/base/",
         "path" : "bin",
         "languages" : [
             {
                 "name" : "R",
                 "code" : ["r"],
-                "extn" : "r",
+                "keywords" : {
+                    "name" : "app",
+                    "extn" : "r"
+                },
                 "commands" : [
                     "Rscript [name].[extn]"
                 ]

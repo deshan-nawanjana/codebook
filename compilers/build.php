@@ -53,35 +53,40 @@
         return file_get_contents($exec_path . $file);
     }
 
-    // source file name
-    $file_name = "app";
-    // source file extension
-    $file_extn = $lang_data["extn"];
-
-    // if file name pattern
-    if(isset($lang_data['file'])) {
-        // match name expression
-        preg_match($lang_data['file'], $code, $matches);
-        // update file name if available
-        if(isset($matches[1])) { $file_name = $matches[1]; }
-    }
-
-    // source file full name
-    $full_name = $file_name . "." . $file_extn;
-
     // method to replace name and extension
     function repl($text) {
-        // get global file name
-        global $file_name;
-        // get global file extension
-        global $file_extn;
-        // replace file name
-        $text = str_replace("[name]", $file_name, $text);
-        // replace file extension
-        $text = str_replace("[extn]", $file_extn, $text);
+        // get global lang data
+        global $lang_data;
+        // get global code
+        global $code;
+        // get keywords
+        $keywords = $lang_data['keywords'];
+        // for each keyword
+        foreach($keywords as $key => $val) {
+            // check for regexp
+            if($val[0] === "/" && $val[strlen($val) - 1] === "/") {
+                // match name expression
+                preg_match($val, $code, $matches);
+                // update file name if available
+                if(isset($matches[1])) {
+                    // replace with match
+                    $text = str_replace("[". $key ."]", $matches[1], $text);
+                }
+            } else {
+                // replace common text
+                $text = str_replace("[". $key ."]", $val, $text);
+            }
+        }
         // retrun text
         return $text;
     }
+
+    // source file name
+    $file_name = repl("[name]");
+    // source file extension
+    $file_extn = repl("[extn]");
+    // source file full name
+    $full_name = $file_name . "." . $file_extn;
 
     // batch script for current block and jump to directory
     $bat_data = "@echo off\npath=" . $comp_path . "\ncd " . $exec_path . "\n";
