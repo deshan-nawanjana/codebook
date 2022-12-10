@@ -83,6 +83,12 @@ body {
     cursor: auto;
 }
 
+.editor textarea::placeholder {
+    color: #FFF6;
+    font-style: italic;
+    font-size: 16px;
+}
+
 .viewer .document {
     scroll-behavior: smooth;
     transition-duration: 0.2s;

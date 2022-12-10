@@ -447,6 +447,8 @@ window.addEventListener('load', async() => {
         // update viewer
         viewer.updateContent()
     }
+    // set textarea placeholder
+    editor.txt.setAttribute('placeholder', "Type something new...")
 })
 
 // on key down
