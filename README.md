@@ -11,6 +11,7 @@
 - Julia
 - Pascal
 - Fortran
+- PHP
 
 ```js
 // array of words
@@ -144,6 +145,12 @@ program hello
 end program
 ```
 
+### PHP
+
+```php
+echo("Hello, World!");
+```
+
 ## 🔮 Setup You Local Server for CodeBook
 
 - Download the `CodeBook Project` source from following github repository.
@@ -167,6 +174,7 @@ compilers
  │    ├── jdk
  │    ├── julia
  │    ├── mingw
+ │    ├── pascal
  │    ├── python
  │    ├── r
  │    └── ruby
