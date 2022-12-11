@@ -3,6 +3,9 @@
     // backend checker respond
     if(isset($_GET['check'])) { echo('CODEBOOK'); exit(); }
 
+    // content type headr
+    header('Content-Type: application/json; charset=utf-8');
+
     // get post request data
     $post = json_decode(file_get_contents('php://input'), true);
     // get compilers data
@@ -29,31 +32,20 @@
         }
     }
 
-    // return if no compiler
-    if(isset($lang_data) === false) { exit(); }
-
-    // compiler path
-    $comp_path = realpath('') . "\\binary\\" . $comp_name . "\\" .  $comp_data['path'];
-    // execution path
-    $exec_path = "cache\\" . $post['uuid'] . "\\";
-
-    // return if no compiler binary
-    if(file_exists($comp_path) === false) {
+    // method to send response
+    function json($data, $time, $comp, $error = false) {
         echo json_encode(
             array(
                 "output" => array(
-                    "data" => "Compiler does not exist at " . $comp_path,
-                    "time" => 0,
-                    "error" => true
+                    "data" => $data,
+                    "time" => $time,
+                    "error" => $error
                 ),
-                "compiler" => $comp_data
+                "compiler" => $comp
             )
         );
         exit();
     }
-
-    // create execution directory if need
-    if(file_exists($exec_path) === false) { mkdir($exec_path); }
 
     // method to save text file
     function save($file, $data) {
@@ -69,6 +61,53 @@
         global $exec_path;
         // return file content
         return file_get_contents($exec_path . $file);
+    }
+
+    // method to get curl response
+    function curl($path) {
+        // create curl
+        $reqs = curl_init($_SERVER["HTTP_REFERER"] . $path);
+        // settings array
+        $opts = array(CURLOPT_RETURNTRANSFER => true); 
+        // add settings to curl
+        curl_setopt_array($reqs, $opts);
+        // get curl response
+        $resp = curl_exec($reqs);
+        // close curl
+        curl_close($reqs);
+        // return response
+        return $resp;
+    }
+
+    // execution path
+    $exec_path = "cache\\" . $post['uuid'] . "\\";
+
+    // create execution directory if need
+    if(file_exists($exec_path) === false) { mkdir($exec_path); }
+
+    // check for php language
+    if($lang === "php") {
+        // save script to file
+        save("app.php", "<?php\n" . $code . "\n?" . ">");
+        // mark start time
+        $time_a = microtime(true);
+        // get response
+        $data = curl("compilers/cache/" . $post['uuid'] . "/app.php");
+        // mark end time
+        $time_b = microtime(true);
+        // print output
+        json($data, 0, array("name" => "Back-End", "version" => ""));
+    }
+
+    // return if no compiler
+    if(isset($lang_data) === false) { exit(); }
+
+    // compiler path
+    $comp_path = realpath('') . "\\binary\\" . $comp_name . "\\" .  $comp_data['path'];
+
+    // return if no compiler binary
+    if(file_exists($comp_path) === false) {
+        json("Compiler does not exist at " . $comp_path,  0, $comp_data, true);
     }
 
     // method to replace name and extension
@@ -143,7 +182,7 @@
     // output result
     $output = array("data" => read("out.txt"), "time" => $time_b - $time_a);
 
-    // print output and compiler data
-    echo json_encode(array("output" => $output, "compiler" => $comp_data));
+    // print output
+    json(read("out.txt"), $time_b - $time_a, $comp_data);
 
 ?>

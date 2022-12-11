@@ -315,7 +315,7 @@ const parserMarkdown = (text = '') => {
 
 // compiler object
 const compiler = {
-    languages : [ 'js', 'javascript' ],
+    languages : [ 'js', 'javascript', 'php' ],
     busy : false,
     backend : true
 }
