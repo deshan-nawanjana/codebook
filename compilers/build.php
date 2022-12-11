@@ -96,7 +96,7 @@
         // mark end time
         $time_b = microtime(true);
         // print output
-        json($data, 0, array("name" => "Back-End", "version" => ""));
+        json($data, $time_b - $time_a, array("name" => "Back-End", "version" => ""));
     }
 
     // return if no compiler
