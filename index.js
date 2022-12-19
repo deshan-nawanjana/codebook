@@ -410,7 +410,7 @@ const executeBakcend = async(text, lang) => {
         }
     }
     // request compiler build
-    const data = await fetch('/codebook/compilers/build.php', {
+    const data = await fetch('./compilers/build.php', {
         // request method
         method : 'POST',
         // request body
